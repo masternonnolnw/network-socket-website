@@ -1,4 +1,4 @@
-export const socketURL = "https://banana-conference-server.songholder.co";
-export const baseApiURL = "https://banana-backend.songholder.co";
-export const chatSocketURL = "https://banana-chat.songholder.co";
+export const socketURL = "http://localhost:8000";
+export const baseApiURL = "http://localhost:5000";
+export const chatSocketURL = "http://localhost:9000";
 // export const socketURL = "localhost:8000/";
