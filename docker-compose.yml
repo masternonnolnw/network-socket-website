@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  banana-backend:
+    build: ./backend
+    container_name: banana-backend
+    ports:
+      - 5000:5000
+  banana-frontend:
+    build: ./frontend
+    container_name: banana-frontend
+    ports:
+      - 3000:3000
+
+  banana-realtime-chat-backend:
+    build: ./realtime-chat-backend
+    container_name: banana-realtime-chat-backend
+    ports:
+      - 9000:9000
+    environment:
+      - DATABASE_URL=postgresql://postgres:banana@host.docker.internal:5432/banana-db?schema=public
+
+  banana-conference-backend:
+    build: ./conference-backend
+    container_name: banana-conference-backend
+    ports:
+      - 8000:8000

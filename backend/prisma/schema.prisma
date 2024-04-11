@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email    String @unique
+  password String
+
+  role Role @default(STUDENT)
+
+  name String @default("")
+
+  CoursesOwned    Course[] @relation(name: "instructor")
+  CoursesEnrolled Course[] @relation(name: "enrolled")
+
+  Messages Message[]
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+model Course {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String
+  description String
+
+  instructor User @relation(name: "instructor", fields: [instructorId], references: [id])
+  instructorId Int
+
+  students User[] @relation(name: "enrolled")
+  studentsCount Int @default(0)
+
+  materials CourseMaterial[]
+
+  ytLinks YoutubeLinks[]
+}
+
+model Message{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  roomId String
+
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  content String
+}
+
+model CourseMaterial{
+  id Int @id @default(autoincrement())
+  uploadedAt DateTime @default(now())
+
+  course Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  fileName String
+
+  downloadLink String
+}
+
+model YoutubeLinks {
+  id Int @id @default(autoincrement())
+  uploadedAt DateTime @default(now())
+
+  course Course @relation(fields: [courseId], references: [id])
+  courseId Int
+
+  youtubeId String
+  clipTitle String @default("")
+}
