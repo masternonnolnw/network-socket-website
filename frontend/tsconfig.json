@@ -14,20 +14,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "baseUrl": "./src"
+    ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/app/providers.js",
-    "src/pages/_app.js"
-, "src/common/components/BodyText/index.js"  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
