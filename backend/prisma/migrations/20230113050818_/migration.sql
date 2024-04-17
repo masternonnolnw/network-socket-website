@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Message" ALTER COLUMN "roomId" SET DATA TYPE TEXT;
