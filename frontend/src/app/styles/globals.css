@@ -19,7 +19,7 @@ body::-webkit-scrollbar-thumb {
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
-  height: 10px;
+  height: 3px;
 }
 
 /* Track */
@@ -81,18 +81,18 @@ code {
     --line-height-body3: 1.125rem;
 
     /* Primary */
-    --primary: #1f2b8f;
-    --primary-bg: #d4d8ff;
-    --primary-light: #787fbf;
-    --primary-medium: #0c1773;
-    --primary-dark: #081155;
+    --primary: #bb86fc;
+    --primary-bg: #ead8ff;
+    --primary-light: #d0b1ff;
+    --primary-medium: #9e63ff;
+    --primary-dark: #6931a9;
 
     /* Secondary */
-    --secondary: #ffd600;
-    --secondary-bg: #fffa99;
-    --secondary-light: #fff563;
-    --secondary-medium: #ffbf00;
-    --secondary-dark: #d4a300;
+    --secondary: #03dac5;
+    --secondary-bg: #a3fff7;
+    --secondary-light: #8ff4eb;
+    --secondary-medium: #00b5a4;
+    --secondary-dark: #00766c;
 
     /* Text */
     --text-high: #0f172a;
@@ -100,6 +100,8 @@ code {
     --text-placeholder: #94a3b8;
     --text-invert: #ffffff;
     --text-disable: #cbd5e1;
+    --text-medium-low: #a8b2d1;
+    --text-low: #ccd6f6;
 
     /* Border */
     --border-default: #cbd5e1;
@@ -112,7 +114,8 @@ code {
     --bg-white: #ffffff;
     --bg-light: #f8fafc;
     --bg-default: #f1f5f9;
-    --bg-dark: #94a3b8;
+    --bg-dark: #0a192f;
+    --bg-dark-foreground: #172a46;
     --bg-disable: #f8fafc;
 
     /*---- System ----*/

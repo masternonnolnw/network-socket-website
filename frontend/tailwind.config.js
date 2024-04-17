@@ -65,6 +65,7 @@ const TAILWIND_CONFIG = {
         light: 'var(--bg-light)',
         dark: 'var(--bg-dark)',
         disable: 'var(--bg-disable)',
+        darkForeground: 'var(--bg-dark-foreground)',
       },
       textColor: {
         high: 'var(--text-high)',
@@ -72,6 +73,8 @@ const TAILWIND_CONFIG = {
         placeholder: 'var(--text-placeholder)',
         invert: 'var(--text-invert)',
         disable: 'var(--text-disable)',
+        low: 'var(--text-low)',
+        mediumLow: 'var(--text-medium-low)',
       },
       boxShadow: {
         DEFAULT: 'var(--shadow-default)',
