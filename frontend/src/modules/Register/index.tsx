@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Button from '@/common/components/base/Button'
 import Input from '@/common/components/base/Input'
 import Typography from '@/common/components/base/Typography'
-import Avatar from '@/common/components/chat-chat/avatar'
+import LargeAvatar from '@/common/components/chat-chat/avatar/large'
 import { AVATARS } from '@/common/const/avatar'
 import userStore from '@/common/stores/user/user-store'
 
@@ -36,7 +36,7 @@ const RegisterPage = () => {
         <Typography variant="body1">Choose your avatar</Typography>
         <div className="flex flex-row w- overflow-auto px-4 gap-2 h-[110px] items-center">
           {AVATARS.map((avatarUrl) => (
-            <Avatar
+            <LargeAvatar
               avatarUrl={avatarUrl}
               key={avatarUrl}
               selected={avatar === avatarUrl}

@@ -8,7 +8,7 @@ interface AvatarProps {
   onClick?: () => void
 }
 
-const Avatar = ({ avatarUrl, selected, onClick }: AvatarProps) => {
+const LargeAvatar = ({ avatarUrl, selected, onClick }: AvatarProps) => {
   return (
     <div
       className={cn(
@@ -22,4 +22,4 @@ const Avatar = ({ avatarUrl, selected, onClick }: AvatarProps) => {
   )
 }
 
-export default Avatar
+export default LargeAvatar
