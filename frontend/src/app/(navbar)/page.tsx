@@ -1,3 +1,3 @@
-import LandingPage from '@/modules/Landing'
+import LobbyPage from '@/modules/Lobby'
 
-export default LandingPage
+export default LobbyPage

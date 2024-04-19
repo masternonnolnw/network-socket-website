@@ -4,7 +4,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <title>Banana | Landing</title>
+        <title>ChatChat</title>
       </head>
       <body>
         <div className="flex flex-col">
