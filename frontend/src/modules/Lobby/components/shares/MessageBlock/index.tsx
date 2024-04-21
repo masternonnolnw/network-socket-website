@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import Typography from '@/common/components/base/Typography'
@@ -45,10 +47,31 @@ const MessageBlock = (props: MessageBlockProps) => {
         <Typography
           variant="body2"
           className={cn(
-            'p-2 rounded-lg max-w-full break-all',
+            'p-2 rounded-lg max-w-full break-all flex flex-row gap-2',
             isMyMessage ? 'bg-green-200 rounded-br-none' : 'bg-gray-200 rounded-bl-none',
           )}
         >
+          {message.content === 'duck' && (
+            <motion.div
+              drag
+              whileTap={{ scale: 10, zIndex: 10000 }}
+              dragConstraints={{
+                left: -100000000,
+                right: 100000000,
+                top: -100000000,
+                bottom: 100000000,
+              }}
+              className="w-[20px] h-[20px] relative pointer-events-auto"
+            >
+              <Image
+                src="/icon/rubber-duck.png"
+                className="object-contain pointer-events-none"
+                width={500}
+                height={500}
+                alt="rubber-duck"
+              />
+            </motion.div>
+          )}
           {message.content}
         </Typography>
         {/* date dispaly when showDetail */}
