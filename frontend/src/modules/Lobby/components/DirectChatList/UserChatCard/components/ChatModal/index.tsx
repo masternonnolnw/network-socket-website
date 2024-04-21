@@ -5,13 +5,14 @@ import Button from '@/common/components/base/Button'
 import Input from '@/common/components/base/Input'
 import { Dialog, DialogContent } from '@/common/components/base/Modal/Dialog'
 import Typography from '@/common/components/base/Typography'
+import SmallAvatar from '@/common/components/chat-chat/avatar/small'
 import { Message, RoomType } from '@/common/interface/room-chat'
 import { User } from '@/common/interface/user'
 import userStore from '@/common/stores/user/user-store'
 import lobbyStore from '@/modules/Lobby/stores/lobby/lobby'
 import { chatSocket } from '@/socket/chat'
 
-import MessageBlock from './components/MessageBlock'
+import MessageBlock from '../../../../shares/MessageBlock'
 
 interface ChatModalProps {
   isOpen: boolean
@@ -33,8 +34,6 @@ const ChatModal = (props: ChatModalProps) => {
     }
     return false
   })
-
-  console.log('room', room)
 
   // mock messages for testing
   // const messages: Message[] = getMockMessage(user, targetUser)
@@ -64,11 +63,12 @@ const ChatModal = (props: ChatModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="min-w-[90%] lg:min-w-[800px] w-fit max-w-[90%] h-[90%] flex flex-col gap-2">
-        <Typography variant="h4" className="font-semibold">
-          {user.username} - {targetUser.username}
+      <DialogContent className="min-w-[90%] lg:min-w-[800px] w-fit max-w-[90%] h-[90%] flex flex-col gap-2 z-[200]">
+        <Typography variant="h4" className="font-semibold flex flex-row gap-2 items-center">
+          <SmallAvatar avatarUrl={targetUser.userAvatar} />
+          {targetUser.username}
         </Typography>
-        <div className="flex flex-col gap-2 w-full p-1 flex-1 overflow-auto">
+        <div className="flex flex-col gap-2 w-full p-1 flex-1 overflow-auto scrollbar-hide pt-5">
           {messages.map((message, index) => (
             <MessageBlock
               key={message.id}

@@ -1,4 +1,6 @@
-export const MOCK_USERS = [
+import { User } from "../interface/user";
+
+export const MOCK_USERS: User[] = [
   {
     id: "1",
     username: "user1",

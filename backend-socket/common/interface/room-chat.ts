@@ -2,7 +2,8 @@ import { User } from "./user";
 
 export enum RoomType {
   Group = "group",
-  Direct = "direct"
+  Direct = "direct",
+  World = "world"
 }
 
 export interface Room {

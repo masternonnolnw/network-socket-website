@@ -1,5 +1,3 @@
-import Navbar from './_components/Navbar'
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -7,10 +5,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>ChatChat</title>
       </head>
       <body>
-        <div className="flex flex-col">
-          <Navbar />
-          <div>{children}</div>
-        </div>
+        <div>{children}</div>
       </body>
     </html>
   )

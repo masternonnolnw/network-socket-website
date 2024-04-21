@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import Typography from '@/common/components/base/Typography'
 import SmallAvatar from '@/common/components/chat-chat/avatar/small'
 import { Message } from '@/common/interface/room-chat'
@@ -13,15 +15,32 @@ interface MessageBlockProps {
 const MessageBlock = (props: MessageBlockProps) => {
   const { message, currentReader, nextMessage } = props
 
-  const isMyMessage = message.sender.id === currentReader.id
+  const isMyMessage =
+    message.sender.id === currentReader.id ||
+    (message.sender.username === 'anonymous' && message.id === currentReader.id)
 
-  const showDetail = nextMessage?.sender.id != message.sender.id
+  const showDetail =
+    nextMessage?.sender.id != message.sender.id || nextMessage.sender.username != message.sender.username
+
+  const [init, setInit] = useState(false)
+  useEffect(() => {
+    if (!init) {
+      setInit(true)
+    }
+  }, [init])
 
   return (
     <div className={`flex gap-2 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
       <div className={`flex gap-2 items-end max-w-[60%] relative ${isMyMessage ? 'flex-row-reverse' : 'flex-row'}`}>
         <div className={showDetail ? '' : 'invisible'}>
+          {/* <Tooltip delayDuration={200}>
+            <TooltipTrigger disabled={!init}> */}
           <SmallAvatar avatarUrl={message.sender.userAvatar} />
+          {/* </TooltipTrigger>
+            <TooltipContent className="w-fit border-none bg-white">
+              <Typography variant="body2">{message.sender.username}</Typography>
+            </TooltipContent>
+          </Tooltip> */}
         </div>
         <Typography
           variant="body2"
@@ -36,8 +55,7 @@ const MessageBlock = (props: MessageBlockProps) => {
         <Typography
           variant="body3"
           className={cn(
-            'text-gray-500 whitespace-nowrap !text-[12px] absolute',
-            showDetail ? 'block' : 'hidden',
+            'text-gray-500 whitespace-nowrap !text-[12px] absolute block',
             isMyMessage ? 'right-[calc(100%+4px)] bottom-0' : 'left-[calc(100%+4px)] bottom-0',
           )}
         >

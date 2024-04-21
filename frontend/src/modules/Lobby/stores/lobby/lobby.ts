@@ -17,6 +17,17 @@ interface ILobbyStore {
   removeRoom: (room: Room) => void
 
   addMessage: (newMessage: { roomId: string; message: Message }) => void
+
+  otherRooms: Room[]
+  setOtherRooms: (rooms: Room[]) => void
+  removeOtherRoom: (room: Room) => void
+  addOtherRoom: (room: Room) => void
+
+  joinRoom: (roomId: string, user: User) => void
+
+  worldRoom: Room | null
+  setWorldRoom: (room: Room) => void
+  addWorldMessage: (message: Message) => void
 }
 
 const lobbyStore = create<ILobbyStore>((set) => ({
@@ -42,13 +53,33 @@ const lobbyStore = create<ILobbyStore>((set) => ({
       })
       return { rooms }
     })
-    // set((state) => {
-    //   const room = state.rooms.find((r) => r.id === roomId)
-    //   if (room) {
-    //     room.messages.push(message)
-    //   }
-    // })
   },
+
+  otherRooms: [],
+  setOtherRooms: (rooms) => set({ otherRooms: rooms }),
+  removeOtherRoom: (room) => set((state) => ({ otherRooms: state.otherRooms.filter((r) => r.id != room.id) })),
+  joinRoom: (roomId, user) => {
+    // join room
+    set((state) => {
+      const rooms = state.rooms.map((r) => {
+        if (r.id === roomId) {
+          r.members.push(user)
+        }
+        return r
+      })
+      return { rooms: [...rooms] }
+    })
+  },
+  addOtherRoom: (room) => set((state) => ({ otherRooms: [...state.otherRooms, room] })),
+  worldRoom: null,
+  setWorldRoom: (room) => set({ worldRoom: room }),
+  addWorldMessage: (message) =>
+    set((state) => ({
+      worldRoom: {
+        ...state.worldRoom!,
+        messages: [...state.worldRoom!.messages, message],
+      },
+    })),
 }))
 
 export default lobbyStore
