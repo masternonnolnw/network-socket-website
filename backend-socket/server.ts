@@ -245,5 +245,7 @@ io.on("connection", (socket) => {
   // });
 });
 
-console.log("server start on port 9000");
-server.listen(9000);
+const port = process.env.PORT || 9000;
+
+console.log(`server start on port ${port}`);
+server.listen(port);
