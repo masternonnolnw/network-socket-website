@@ -219,6 +219,19 @@ io.on("connection", (socket) => {
         io.emit("new-world-message", newMessage);
       }
     );
+
+    // delete group room
+    socket.on("delete-group-room", ({ roomId }: { roomId: string }) => {
+      console.log("delete-group-room", roomId);
+      const room = rooms.find((room) => room.id === roomId);
+      if (!room || room.type != RoomType.Group) return;
+
+      // delete
+      rooms = rooms.filter((room) => room.id !== roomId);
+
+      // emit to all users
+      io.emit("delete-room", { roomId });
+    });
   });
 
   // socket.on("join-room", (roomId, username) => {

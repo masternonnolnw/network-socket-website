@@ -28,6 +28,8 @@ interface ILobbyStore {
   worldRoom: Room | null
   setWorldRoom: (room: Room) => void
   addWorldMessage: (message: Message) => void
+
+  removeRoomById: (roomId: string) => void
 }
 
 const lobbyStore = create<ILobbyStore>((set) => ({
@@ -80,6 +82,14 @@ const lobbyStore = create<ILobbyStore>((set) => ({
         messages: [...state.worldRoom!.messages, message],
       },
     })),
+  removeRoomById: (roomId) => {
+    // remove from rooms and otherRooms
+    set((state) => {
+      const rooms = state.rooms.filter((r) => r.id != roomId)
+      const otherRooms = state.otherRooms.filter((r) => r.id != roomId)
+      return { rooms, otherRooms }
+    })
+  },
 }))
 
 export default lobbyStore

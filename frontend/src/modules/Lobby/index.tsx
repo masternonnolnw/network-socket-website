@@ -31,6 +31,8 @@ const LobbyPage = () => {
   const setWorldRoom = lobbyStore((state) => state.setWorldRoom)
   const addWorldMessage = lobbyStore((state) => state.addWorldMessage)
 
+  const removeRoomById = lobbyStore((state) => state.removeRoomById)
+
   useEffect(() => {
     if (!isUserInit) return
     if (!user || !user.username) return
@@ -95,6 +97,12 @@ const LobbyPage = () => {
     chatSocket.on('new-world-message', (message: Message) => {
       console.log('new-world-message', message)
       addWorldMessage(message)
+    })
+
+    // delete room
+    chatSocket.on('delete-room', ({ roomId }: { roomId: string }) => {
+      console.log('delete-room', roomId)
+      removeRoomById(roomId)
     })
 
     return () => {

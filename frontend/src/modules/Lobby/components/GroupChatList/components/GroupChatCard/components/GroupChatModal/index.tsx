@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import Button from '@/common/components/base/Button'
 import Input from '@/common/components/base/Input'
-import { Dialog, DialogContent } from '@/common/components/base/Modal/Dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/common/components/base/Modal/Dialog'
 import Typography from '@/common/components/base/Typography'
 import SmallAvatar from '@/common/components/chat-chat/avatar/small'
 import { Message, Room } from '@/common/interface/room-chat'
@@ -36,6 +36,12 @@ const GroupChatModal = (props: GroupChatModalProps) => {
     setMessage('')
   }
 
+  const deleteGroup = () => {
+    chatSocket.emit('delete-group-room', {
+      roomId: room.id,
+    })
+  }
+
   return (
     <Dialog
       open={isOpen}
@@ -46,12 +52,27 @@ const GroupChatModal = (props: GroupChatModalProps) => {
       <DialogContent className="min-w-[90%] lg:min-w-[800px] w-fit max-w-[90%] h-[90%] flex flex-col gap-2 z-[200]">
         <Typography variant="h4" className="font-semibold flex flex-row gap-4 items-center">
           {room.name}
-          <div className="flex flex-row">
+          <div className="flex flex-row w-full">
             {room.members.map((user) => (
               <div className="flex ml-[-10px] first:ml-0">
                 <SmallAvatar key={user.id} avatarUrl={user.userAvatar} />
               </div>
             ))}
+            <Dialog>
+              <DialogTrigger className="ml-auto flex mr-8">
+                <Button className="flex ml-auto bg-system-error hover:bg-system-error-medium">Delete</Button>
+              </DialogTrigger>
+              <DialogContent className="z-[200]">
+                <Typography variant="h4" className="text-center">
+                  Are you sure you want to delete this group?
+                </Typography>
+                <div className="flex flex-row gap-2 justify-center">
+                  <Button size="sm" className="flex bg-system-error hover:bg-system-error-medium" onClick={deleteGroup}>
+                    Yes
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </Typography>
         <div className="flex flex-col gap-2 w-full p-1 flex-1 overflow-auto scrollbar-hide pt-5">
