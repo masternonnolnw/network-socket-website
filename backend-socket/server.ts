@@ -3,7 +3,7 @@ import { createServer } from "http";
 
 import { Server } from "socket.io";
 import { User } from "./common/interface/user";
-import { Room } from "./common/interface/room-chat";
+import { Room, RoomType } from "./common/interface/room-chat";
 import { MOCK_USERS } from "./common/const/user.const";
 
 const express = require("express");
@@ -37,18 +37,23 @@ app.get("/", (req: Request, res: Response) => {
 
 // let userCount: { [key: string]: number } = {};
 
-const rooms: Room[] = [];
+let rooms: Room[] = [];
 const onlineUsers: User[] = MOCK_USERS;
+const userSocketId: { [key: string]: string } = {};
 
 io.on("connection", (socket) => {
   // lobby
   socket.on("join-lobby", (user: User) => {
     console.log("join-lobby", user, socket.id);
+    userSocketId[user.id] = socket.id;
 
     // emit to new user that join the lobby with all online/offline users and rooms
     io.to(socket.id).emit("join-lobby", {
       onlineUsers,
-      rooms
+      // return only rooms that user is in
+      rooms: rooms.filter((room) =>
+        room.members.some((member) => member.id === user.id)
+      )
     });
 
     // emit to all other users that new user join the lobby
@@ -66,6 +71,66 @@ io.on("connection", (socket) => {
       // emit to all other users that user leave the lobby
       socket.broadcast.emit("leave-user", user);
     });
+
+    // create room
+    socket.on(
+      "create-room",
+      ({ type, members }: { type: RoomType; members: User[] }) => {
+        const room: Room = {
+          type,
+          id: Math.random().toString(36).substring(7),
+          name: members.map((member) => member.username).join(", "),
+          members,
+          messages: []
+        };
+
+        rooms.push(room);
+
+        // emit to all users that new room is created
+        members.forEach((member) => {
+          io.to(userSocketId[member.id]).emit("create-room", room);
+        });
+      }
+    );
+
+    // send message
+    socket.on(
+      "send-message",
+      ({
+        roomId,
+        message,
+        sender
+      }: {
+        roomId: string;
+        message: string;
+        sender: User;
+      }) => {
+        console.log("send-message", roomId, message, sender);
+        const room = rooms.find((room) => room.id === roomId);
+        if (!room) return;
+
+        const newMessage = {
+          id: Math.random().toString(36).substring(7),
+          sender,
+          content: message,
+          timestamp: Date.now()
+        };
+
+        room.messages.push(newMessage);
+
+        rooms = rooms.map((r) => (r.id === roomId ? room : r));
+
+        console.log("newMessage", newMessage, rooms);
+
+        // emit to all users in the room that new message is sent
+        room.members.forEach((member) => {
+          io.to(userSocketId[member.id]).emit("new-message", {
+            roomId,
+            message: newMessage
+          });
+        });
+      }
+    );
   });
 
   // socket.on("join-room", (roomId, username) => {

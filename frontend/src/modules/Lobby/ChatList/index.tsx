@@ -10,14 +10,14 @@ const ChatList = () => {
 
   const constraintsRef = useRef(null)
 
-  console.log('rooms', rooms)
-  console.log('onlineUsers', onlineUsers)
-
   return (
-    <motion.div ref={constraintsRef} className="flex flex-row items-center gap-4 p-4 w-full flex-wrap bg-[#f5f5f5]">
+    <motion.div
+      ref={constraintsRef}
+      className="flex flex-row items-center gap-4 p-4 w-full flex-wrap bg-[#f5f5f5] max-w-[1150px] mx-auto relative"
+    >
       {onlineUsers.map((user) => (
         <motion.div
-          className="flex-1"
+          className="flex-1 p-1"
           drag
           dragConstraints={constraintsRef}
           whileDrag={{
