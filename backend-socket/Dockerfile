@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY ./ ./
 
+# Install TypeScript and ts-node
+RUN npm install -g typescript ts-node
+
 # install pnpm
 RUN npm i -g pnpm
 
