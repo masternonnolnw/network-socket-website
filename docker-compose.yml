@@ -7,8 +7,8 @@ services:
     ports:
       - 3000:3000
 
-  banana-realtime-chat-backend:
-    build: ./realtime-chat-backend
-    container_name: banana-realtime-chat-backend
+  backend-socket:
+    build: ./backend-socket
+    container_name: backend-socket
     ports:
       - 9000:9000
