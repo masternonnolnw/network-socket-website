@@ -50,7 +50,7 @@ const GroupChatModal = (props: GroupChatModalProps) => {
       }}
     >
       <DialogContent className="min-w-[90%] lg:min-w-[800px] w-fit max-w-[90%] h-[90%] flex flex-col gap-2 z-[200]">
-        <Typography variant="h4" className="font-semibold flex flex-row gap-4 items-center">
+        <Typography variant="h4" className="whitespace-nowrap font-semibold flex flex-row gap-4 items-center">
           {room.name}
           <div className="flex flex-row w-full">
             {room.members.map((user) => (
