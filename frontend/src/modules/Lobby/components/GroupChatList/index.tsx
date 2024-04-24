@@ -18,7 +18,7 @@ const GroupChatList = () => {
   return (
     <div className="flex flex-col gap-2 max-w-[1150px] mx-auto w-full">
       <Typography variant="h4" className="text-high items-center flex flex-row gap-2">
-        My Group Chat ({rooms.length})
+        My Group Chat ({rooms.filter((room) => room.type === RoomType.Group).length})
         <CreateGroupButton />
       </Typography>
       <motion.div
